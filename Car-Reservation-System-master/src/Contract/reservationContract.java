@@ -16,12 +16,4 @@ public class reservationContract extends contract {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-
-	public rentalContract getM_rentalContract() {
-		return m_rentalContract;
-	}
-
-	public void setM_rentalContract(rentalContract m_rentalContract) {
-		this.m_rentalContract = m_rentalContract;
-	}
 }//end reservationContract

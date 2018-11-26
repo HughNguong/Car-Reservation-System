@@ -17,11 +17,5 @@ public class rentalContract extends contract {
 		super.finalize();
 	}
 
-	public insuranceContract getM_insuranceContract() {
-		return m_insuranceContract;
-	}
-
-	public void setM_insuranceContract(insuranceContract m_insuranceContract) {
-		this.m_insuranceContract = m_insuranceContract;
-	}
+	
 }//end rentalContract
