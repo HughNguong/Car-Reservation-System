@@ -15,8 +15,9 @@ public class client {
 	public license m_license;
 	public contract m_contract;
 
-	public client(){
-
+	public client(String name,int ID){
+		this.setName(name);
+		this.setID(ID);		
 	}
 
 	public int getID() {
@@ -51,11 +52,11 @@ public class client {
 	}
 	
 	public void payBill(){
-
+		
 	}
 
 	public void requestRent(){
-
+		
 	}
 
 	public void reserveVehicle(){

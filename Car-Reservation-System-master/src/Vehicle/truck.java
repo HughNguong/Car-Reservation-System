@@ -1,6 +1,8 @@
 package Vehicle;
 
+import java.util.Scanner;
 import License.truckLicense;
+import src.main;
 
 /**
  * @author Tuan Nguyen
@@ -10,9 +12,14 @@ import License.truckLicense;
 public class truck extends vehicle {
 
 	public truckLicense m_truckLicense;
-
+	
 	public truck(){
-
+		setVehicleID(main.truckID);
+		main.truckID++;
+		setLicense(2);
+		setAvailibility(true);
+		
+		System.out.println("Truck info:\n- "+getVehicleID()+"\n- "+getLicense()+"\n- "+isAvailibility()+"\n");
 	}
 
 	public void finalize() throws Throwable {
