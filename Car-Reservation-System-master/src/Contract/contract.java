@@ -7,7 +7,7 @@ import Vehicle.vehicle;
  * @version 1.0
  * @created 26-Nov-2018 5:27:40 PM
  */
-public class contract {
+abstract public class contract {
 
 	private int contractID;
 	private int VehicleID;

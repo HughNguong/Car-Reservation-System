@@ -5,7 +5,7 @@ package License;
  * @version 1.0
  * @created 26-Nov-2018 5:27:45 PM
  */
-public class truckLicense {
+public class truckLicense extends license {
 
 	public truckLicense(){
 

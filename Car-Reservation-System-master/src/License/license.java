@@ -5,7 +5,7 @@ package License;
  * @version 1.0
  * @created 26-Nov-2018 5:27:42 PM
  */
-public class license {
+abstract public class license {
 
 	private int license;
 	public truckLicense m_truckLicense;

@@ -10,7 +10,7 @@ import src.main;
  * @version 1.0
  * @created 26-Nov-2018 5:27:46 PM
  */
-public class van extends truck {
+public class van extends vehicle {
 
 	public carLicense m_carLicense;
 
@@ -20,10 +20,8 @@ public class van extends truck {
 		setLicense(1);
 		setAvailibility(true);
 		
-		System.out.println("Van info:\n- "+getVehicleID()+"\n- "+getLicense()+"\n- "+isAvailibility()+"\n");
+		System.out.println("Van info:\n- "+ this.getVehicleID()+"\n- "+getLicense()+"\n- "+isAvailibility()+"\n");
 	}
 
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
+
 }//end van

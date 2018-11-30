@@ -5,10 +5,10 @@ package Vehicle;
  * @version 1.0
  * @created 26-Nov-2018 5:27:48 PM
  */
-public class vehicle {
+abstract public class vehicle {
 	private boolean Availibility;
 	private int License;
-	private int VehicleID;
+	public int VehicleID;
 
 	public boolean isAvailibility() {
 		return Availibility;

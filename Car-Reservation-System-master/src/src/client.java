@@ -2,6 +2,7 @@ package src;
 
 import Contract.contract;
 import License.license;
+import Vehicle.vehicle;
 
 /**
  * @author Tuan Nguyen
@@ -14,12 +15,16 @@ public class client {
 	private String Name;
 	public license m_license;
 	public contract m_contract;
+//	public rentalOffice m_rent;
+	
 
 	public client(String name,int ID){
 		this.setName(name);
-		this.setID(ID);		
+		this.setID(ID);	
+		
+		
+		
 	}
-
 	public int getID() {
 		return ID;
 	}
@@ -59,8 +64,44 @@ public class client {
 		
 	}
 
-	public void reserveVehicle(){
-
+	public void reserveVehicle(rentalOffice r, String v){
+		int i;
+		if (v== "v") {
+		for (i = 1 ; i <= (r.getNoOfVan()+1); i++)
+		{
+			if (i == r.getNoOfVan()+1) {System.out.println("No vans left to reserve"); break;}
+			if(r.vans.get(i).isAvailibility()); 
+			{
+				r.vans.get(i).setAvailibility(false);
+				r.createContract(this,r.vans.get(i));
+				
+				break;
+			}
+		}	
+		}
+		if (v== "t") {
+			for (i = 1 ; i <= (r.getNoOfTruck()+1); i++)
+			{
+				if (i == r.getNoOfTruck()+1) {System.out.println("No trucks left to reserve"); break;}
+				if(r.trucks.get(i).isAvailibility()); 
+				{
+					r.trucks.get(i).setAvailibility(false);
+					break;
+				}
+			}	
+			}
+		if (v== "c") {
+			for (i = 1 ; i <= (r.getNoOfCar()+1); i++)
+			{
+				if (i == r.getNoOfCar()+1) {System.out.println("No cars left to reserve"); break;}
+				if(r.cars.get(i).isAvailibility()); 
+				{
+					r.cars.get(i).setAvailibility(false);
+					break;
+				}
+			}	
+			}
+		
 	}
 
 	public void returnVehicle(){
