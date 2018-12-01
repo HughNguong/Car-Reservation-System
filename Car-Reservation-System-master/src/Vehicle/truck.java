@@ -19,7 +19,7 @@ public class truck extends vehicle {
 		setLicense(2);
 		setAvailibility(true);
 		
-		System.out.println("Truck info:\n- "+this.getVehicleID()+"\n- "+getLicense()+"\n- "+isAvailibility()+"\n");
+		
 	}
 
 	public void finalize() throws Throwable {

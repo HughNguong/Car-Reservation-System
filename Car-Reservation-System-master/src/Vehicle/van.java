@@ -20,7 +20,7 @@ public class van extends vehicle {
 		setLicense(1);
 		setAvailibility(true);
 		
-		System.out.println("Van info:\n- "+ this.getVehicleID()+"\n- "+getLicense()+"\n- "+isAvailibility()+"\n");
+
 	}
 
 

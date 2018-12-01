@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import Contract.contract;
+import Contract.rentalContract;
 import Contract.reservationContract;
 import Vehicle.car;
 import Vehicle.truck;
@@ -67,7 +68,7 @@ public class rentalOffice {
 		
 		
 		System.out.println("Office: "+ this.getOfficeID()+" has "+ cars.size()+" cars,"+ trucks.size()+" trucks and "+ vans.size()+" vans");
-		System.out.println("Welcome to our reservation system");
+		System.out.println("==============================================Welcome to our reservation system==========================================\n");
 		
 	}
 	
@@ -122,11 +123,18 @@ public class rentalOffice {
 	public boolean checkAvailability(){
 		return false;
 	}
-
-	public void createContract(client c, vehicle v){
+	public contract createRentContract(client c, contract resCon){
+		contract con = new rentalContract();
+		return con;
+		//To do, set vehicle
+	}
+	
+	
+	public contract createResContract(client c, vehicle v,int d){
 		
-		contract con = new reservationContract();
+		reservationContract con = new reservationContract(d,v);
 		con.setContractID(ListOfCustomer.get(main.tempID).getID());
+		return con;
 		//To do, set vehicle
 	}
 	

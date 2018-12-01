@@ -18,8 +18,6 @@ public class car extends vehicle {
 		main.carID++;
 		setLicense(1);
 		setAvailibility(true);
-		
-		System.out.println("Car info:\n- "+this.getVehicleID()+"\n- "+getLicense()+"\n- "+isAvailibility()+"\n");
 	}
 
 	public void finalize() throws Throwable {
