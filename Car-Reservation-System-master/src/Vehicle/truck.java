@@ -1,7 +1,7 @@
 package Vehicle;
 
 import java.util.Scanner;
-import License.truckLicense;
+
 import src.main;
 
 /**
@@ -11,7 +11,7 @@ import src.main;
  */
 public class truck extends vehicle {
 
-	public truckLicense m_truckLicense;
+	
 	
 	public truck(){
 		setVehicleID(main.truckID);

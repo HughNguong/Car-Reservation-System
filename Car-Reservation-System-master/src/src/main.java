@@ -26,8 +26,11 @@ public class main {
 			switch(choice) {
 			   case "p":
 				  System.out.println("Please enter the name of Customer");
-				  
-				  client cl= new client(sc.nextLine(), CiD);
+				  String name = sc.nextLine();
+				  System.out.println("Please enter the license of "+ name+", 1 for car, 2 for truck license" );
+				  int license = sc.nextInt();
+				  sc.nextLine();
+				  client cl= new client(name, CiD, license);
 				  r1.addCustomer(cl);
 			     System.out.println(cl.getName()+ " is added to the system with ID: "+ CiD);
 			     cl.setID(CiD);	
@@ -86,7 +89,8 @@ public class main {
 				   break;
 			   case "l1":
 				   for (int i= 0 ; i<r1.getListOfCustomer().size(); i ++) {
-					   System.out.println(r1.getListOfCustomer().get(i).getName()+ " id: "+r1.getListOfCustomer().get(i).getID());
+					   System.out.println(r1.getListOfCustomer().get(i).getName()+ " id: "+r1.getListOfCustomer().get(i).getID()+
+							   " license: " +r1.getListOfCustomer().get(i).license);
 				   }
 				   break;
 			   // You can have any number of case statements.

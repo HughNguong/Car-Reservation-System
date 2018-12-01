@@ -1,7 +1,9 @@
 package src;
 
 import Contract.contract;
-import License.license;
+import Contract.rentalContract;
+import Contract.reservationContract;
+
 import Vehicle.vehicle;
 
 /**
@@ -13,14 +15,16 @@ public class client {
 
 	private int ID;
 	private String Name;
-	public license m_license;
+	public int license;
 	public contract m_contract;
+	public reservationContract m_rescontract;
 //	public rentalOffice m_rent;
 	
 
-	public client(String name,int ID){
+	public client(String name,int ID,int li){
 		this.setName(name);
 		this.setID(ID);	
+		this.license = li;
 		
 		
 		
@@ -33,13 +37,7 @@ public class client {
 		ID = iD;
 	}
 
-	public license getM_license() {
-		return m_license;
-	}
-
-	public void setM_license(license m_license) {
-		this.m_license = m_license;
-	}
+	
 
 	public contract getM_contract() {
 		return m_contract;
@@ -48,6 +46,7 @@ public class client {
 	public void setM_contract(contract m_contract) {
 		this.m_contract = m_contract;
 	}
+	
 	public String getName() {
 		return Name;
 	}
@@ -66,7 +65,7 @@ public class client {
 
 	public void reserveVehicle(rentalOffice r, String v){
 		int i;
-		if (v== "v") {
+		if (v== "v" && this.license == 1) {
 		for (i = 1 ; i <= (r.getNoOfVan()+1); i++)
 		{
 			if (i == r.getNoOfVan()+1) {System.out.println("No vans left to reserve"); break;}

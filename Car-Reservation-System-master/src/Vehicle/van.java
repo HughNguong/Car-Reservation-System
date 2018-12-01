@@ -2,7 +2,7 @@ package Vehicle;
 
 import java.util.Scanner;
 
-import License.carLicense;
+
 import src.main;
 
 /**
@@ -12,7 +12,7 @@ import src.main;
  */
 public class van extends vehicle {
 
-	public carLicense m_carLicense;
+
 
 	public van(){
 		setVehicleID(main.vanID);

@@ -127,10 +127,9 @@ public class rentalOffice {
 		
 		contract con = new reservationContract();
 		con.setContractID(ListOfCustomer.get(main.tempID).getID());
-		
-		
-
+		//To do, set vehicle
 	}
+	
 
 	public void endContract(){
 

@@ -2,7 +2,7 @@ package Vehicle;
 
 import java.util.Scanner;
 import src.*;
-import License.carLicense;
+
 
 /**
  * @author Tuan Nguyen
@@ -11,7 +11,7 @@ import License.carLicense;
  */
 public class car extends vehicle {
 
-	public carLicense m_carLicense;
+	
 	
 	public car(){
 		setVehicleID(main.carID);
@@ -26,11 +26,5 @@ public class car extends vehicle {
 		super.finalize();
 	}
 
-	public carLicense getM_carLicense() {
-		return m_carLicense;
-	}
-
-	public void setM_carLicense(carLicense m_carLicense) {
-		this.m_carLicense = m_carLicense;
-	}
+	
 }//end car
