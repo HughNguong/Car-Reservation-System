@@ -22,8 +22,8 @@ public class rentalOffice {
 
 	private int OfficeID;
 	private int noOfCar, noOfVan, noOfTruck;
-	
-	
+	private int grossRevenue=0;
+	public int contractID=0;
 	public contract m_contract;
 	public billPayment m_billPayment;
 	
@@ -32,12 +32,18 @@ public class rentalOffice {
 	public LinkedList <car> cars = new LinkedList<car> ();
 	public LinkedList <van> vans = new LinkedList<van> ();
 	public LinkedList <truck> trucks = new LinkedList<truck>();
-	public LinkedList<client> ListOfCustomer= new LinkedList<client>();
+	public  LinkedList<client> ListOfCustomer= new LinkedList<client>();
 	
 	public LinkedList<client> getListOfCustomer() {
+		
 		return ListOfCustomer;
 	}
-
+	public void printListofCustomer() {
+		 for (int i= 0 ; i<this.getListOfCustomer().size(); i ++) {
+			   System.out.println(this.getListOfCustomer().get(i).getName()+ " id: "+this.getListOfCustomer().get(i).getID()+
+					   " license: " +this.getListOfCustomer().get(i).license);
+		   }
+	}
 
 	public void addCustomer(client c) {
 		ListOfCustomer.add(c);
@@ -73,6 +79,12 @@ public class rentalOffice {
 	}
 	
 
+	public int getGrossRevenue() {
+		return grossRevenue;
+	}
+	public void setGrossRevenue(int grossRevenue) {
+		this.grossRevenue = grossRevenue;
+	}
 	public int getOfficeID() {
 		return OfficeID;
 	}
@@ -123,25 +135,29 @@ public class rentalOffice {
 	public boolean checkAvailability(){
 		return false;
 	}
-	public contract createRentContract(client c, contract resCon){
-		contract con = new rentalContract();
-		return con;
-		//To do, set vehicle
-	}
-	
-	
-	public contract createResContract(client c, vehicle v,int d){
+	public contract createRentContract(client c,contract resCon){
 		
+		contract con = new rentalContract();
+		con.setVehicleID(resCon.getVehicleID());
+		con.setM_vehicle(resCon.getM_vehicle());
+		con.setContractID(resCon.getContractID());
+		con.setStartday(main.realday);
+		return con;
+		//To do, set vehicle
+	}
+	
+	
+	public reservationContract createResContract(client c, vehicle v,int d,int ID){
 		reservationContract con = new reservationContract(d,v);
-		con.setContractID(ListOfCustomer.get(main.tempID).getID());
+		con.setVehicleID(ID);
+		con.setContractID(contractID);
+		con.setStartday(main.realday);
+		contractID++;
 		return con;
 		//To do, set vehicle
 	}
 	
 
-	public void endContract(){
-
-	}
 
 	public void lockVehicle(){
 

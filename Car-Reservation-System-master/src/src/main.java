@@ -21,11 +21,12 @@ public class main {
 	
 		String choice,choice1;
 		while(true) {
+			System.out.println("===========================Main page===========================");
 			System.out.println("Please choose option:\n(a) Add customer\n(p) Perform actions\n"
-					+ "(l1) List of customer\n(l2) list of vehicle\n(add) end working day.");
+					+ "(l1) List of customer\n(add) end working day.");
 			choice = sc.nextLine(); 
 			switch(choice) { // Rental action
-			   case "a":
+			   case "a": // adding customer
 				  System.out.println("Please enter the name of Customer");
 				  String name = sc.nextLine();
 				  System.out.println("Please enter the license of "+ name+", (1) car license, (2) truck license" );
@@ -39,69 +40,87 @@ public class main {
 			    
 			      break; // optional
 			   
-			   case"p":// Client action
+			   case"p":// Client action // customer perform action
 				   if (r1.getListOfCustomer().isEmpty()) {
 					   System.out.println("There is no customer");
 					   break;
 					   }
-				   System.out.println("Please enter the ID of Customer you want to perform");
-				   for (int i= 0 ; i<r1.getListOfCustomer().size(); i ++) {
-					   System.out.println(r1.getListOfCustomer().get(i).getName()+ " ID: "+r1.getListOfCustomer().get(i).getID()+
-							   " license: " +r1.getListOfCustomer().get(i).license);
-				   }
+				   System.out.println("Please enter the ID of Customer you want to perform:");
+				   r1.printListofCustomer();
 				   tempID = sc.nextInt();
 				   sc.nextLine();
-				   
-				   System.out.println("Please enter the action you want to perform for "+r1.getListOfCustomer().get(tempID).getName() +":"
-				   		+ "\n(r) reserve car\n(f) fechVehical\n(b) return car back\n(l1) list reservation contract\n(l2) list rental contract:");
+				   client tempC= r1.ListOfCustomer.get(tempID);
+				   System.out.println("=========================== "+ tempC.getName() +" personal page===========================\nPlease enter the action you want to perform:"
+				   		+ "\n(r) reserve car\n(f) fechVehical\n(b) back the vehicle to office\n(c) cancel reservation\n(l1) list reservation contract"
+				   		+ "\n(l2) list rental contract:");
 				   choice1 = sc.nextLine(); 
 				   
 				   switch(choice1) { 
 				   case "r":
-					   System.out.println("Which type of car do you want to resereve");
+					   System.out.println("Which type of car do you want to resereve (c)ar,(v)van,(t)truck:");
 					   //get client ID from temp ID then do perform
 					   String choice2 = sc.nextLine(); 
-					   System.out.println("How many day you want to reserve this vehicle?");
+					   System.out.println("How many days you want to reserve this vehicle?");
 					   int d= sc.nextInt();
 					   sc.nextLine();
 					   switch(choice2) {
 					   case "c":
-						  r1.getListOfCustomer().get(tempID).reserveVehicle(r1, "c",d);
+						  tempC.reserveVehicle(r1, "c",d);
 						break;   
 					   case "v":
-							  r1.getListOfCustomer().get(tempID).reserveVehicle(r1, "v",d);
+							  tempC.reserveVehicle(r1, "v",d);
 							break;
 					   case "t":
-							  r1.getListOfCustomer().get(tempID).reserveVehicle(r1, "t",d);
+							  tempC.reserveVehicle(r1, "t",d);
 							break;
 					   }
 					   
 					   break;
-				   case "f":
+				   case "f":// fectching car
 					   try
 						{
 							int ID;
-							System.out.println("Reservation Contract ID:");
+							System.out.println(tempC.getName()+" has "+tempC.resContract.size()+ " reservation contract(s)");
+							tempC.printListofRes();
+							System.out.println("Enter reservation contract ID to fetch vehicle:");
 							ID = sc.nextInt();
 							sc.nextLine();
-							r1.getListOfCustomer().get(tempID).requestRent(r1, ID);
-							break;
+							tempC.requestRent(r1, ID);
+						
 						}
 						catch(Exception e) {
 							System.out.println("No contract found!");
 						}
 					   break;
-				   case "b":
-					   System.out.println("Return Vehicle");
-					   r1.getListOfCustomer().get(tempID).returnVehicle();   
-					   break;
-				   case "l1":
-					   for (int i= 0 ; i<r1.getListOfCustomer().get(tempID).resContract.size(); i ++) {
-						   System.out.println( "ID: "+r1.getListOfCustomer().get(tempID).rentContract.get(i).getContractID()+
-								   " Vehicle: " +r1.getListOfCustomer().get(tempID).rentContract.get(i).getClass());
+					   
+				   case "b": // return vehicle
+					   if (tempC.rentContract.isEmpty()) System.out.println("This client haven't fetch any vehicles");
+					   else {  
+					   System.out.println("Which rental contract ID you want to terminate");
+					   
+					   tempC.printListofRental();
+					   int RentID = sc.nextInt();
+					   sc.nextLine();
+					   
+					   tempC.returnVehicle(r1,RentID);
+					   
 					   }
 					   break;
-				   case "l2":
+				   case "c":
+					   if (tempC.resContract.isEmpty()) System.out.println("This client has no reservation contract to cancel");
+					   else {
+					   System.out.println("Which contract ID do you want to terminate?");
+					   tempC.printListofRes();
+					   int tempID1= sc.nextInt();
+					   sc.nextLine();
+					   tempC.endContract(tempID1,r1);
+					   }
+					   break;
+				   case "l1": // list reservation contract  
+						 r1.ListOfCustomer.get(tempID).printListofRes();  
+					   break;
+				   case "l2":// list rental contract
+					   r1.ListOfCustomer.get(tempID).printListofRental();
 					   break;
 				   default: 
 					   
@@ -110,19 +129,16 @@ public class main {
 				   /* Todo here*/
 				   
 				   break;
-			   case "l1":
-				   for (int i= 0 ; i<r1.getListOfCustomer().size(); i ++) {
-					   System.out.println(r1.getListOfCustomer().get(i).getName()+ " id: "+r1.getListOfCustomer().get(i).getID()+
-							   " license: " +r1.getListOfCustomer().get(i).license);
-				   }
+			   case "l1": // list list of customer
+				   r1.printListofCustomer();
 				   break;
-			   case "add":
+			   case "add": // add day
 				   realday ++;
-				   System.out.println("Shutting down /**************************/ New day starts/**************************/ \n");
-				   System.out.println("Day "+ realday+ ". Good Morning");
-				   
+				   System.out.println("Shutting down system /**************************/ New day starts/**************************/ \n");
+				   System.out.println("The company gross revenue is "+ r1.getGrossRevenue());
+				   System.out.println("\nDay "+ realday+ ". Good Morning");
+				   // TODO, check contract end. terminate contract
 				   break;
-			   // You can have any number of case statements.
 			   default : // Optional
 			      System.out.println("Invalid operation, please input again");
 			}

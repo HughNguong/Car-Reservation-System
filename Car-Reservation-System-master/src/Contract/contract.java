@@ -12,9 +12,17 @@ abstract public class contract {
 	private int contractID;
 	private int VehicleID;
 	public vehicle m_vehicle;
-
+	private int startday;
 	public contract(){
 
+	}
+	
+	public int getStartday() {
+		return startday;
+	}
+
+	public void setStartday(int startday) {
+		this.startday = startday;
 	}
 
 	public void finalize() throws Throwable {

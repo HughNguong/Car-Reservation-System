@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import Contract.contract;
 import Contract.rentalContract;
 import Contract.reservationContract;
-
+import Vehicle.car;
+import Vehicle.truck;
+import Vehicle.van;
 import Vehicle.vehicle;
 
 /**
@@ -19,8 +21,7 @@ public class client {
 	private String Name;
 	public int license;
 	public contract m_contract;
-	
-	public LinkedList<contract> resContract = new LinkedList<contract>();
+	public LinkedList<reservationContract> resContract = new LinkedList<reservationContract>();
 	public LinkedList<contract> rentContract = new LinkedList<contract>();
 	
 	private int i = 0;
@@ -45,8 +46,29 @@ public class client {
 		ID = iD;
 	}
 
-	
-
+	public void printListofRental() {
+		 if (this.rentContract.size()== 0) System.out.println("This person has no rental contracts");
+		   else
+		   {
+		   
+		   for (int i= 0; i<this.rentContract.size(); i ++) {
+			   System.out.println( "Rental ID: "+ this.rentContract.get(i).getContractID()+
+					   " Vehicle: " + this.rentContract.get(i).getM_vehicle().getClass());
+		   }
+		   
+		   }
+	}
+	public void printListofRes() {
+		 if (this.resContract.size()== 0) System.out.println("This person has no reservation contracts");
+		   else
+		   {
+		   for (int i= 0; i<this.resContract.size(); i ++) {
+			   System.out.println( "Reservation ID: "+ this.resContract.get(i).getContractID()+
+					   " Vehicle: " + this.resContract.get(i).getM_vehicle().getClass());
+		   }
+		   }
+		
+	}
 	public contract getM_contract() {
 		return m_contract;
 	}
@@ -59,6 +81,38 @@ public class client {
 		return Name;
 	}
 
+	public void endContract(int ResID,rentalOffice r){
+		System.out.println("Contract ID"+ this.resContract.get(ResID).getContractID()+" has been terminated");
+		reservationContract temReservationContract = resContract.get(ResID);
+		if ( temReservationContract.getM_vehicle() instanceof car )
+		{
+			temReservationContract.setDay(temReservationContract.getDay()- main.realday);
+			r.cars.get(k).setAvailibility(true);
+			k--;
+			System.out.println("Car susscefully return");
+	}
+		// Todo set availibility again
+		// Todo rental office calculate rent (paybill)
+		if ( temReservationContract.getM_vehicle() instanceof truck )
+		{
+			temReservationContract.setDay(temReservationContract.getDay()- main.realday);
+			r.trucks.get(j).setAvailibility(true);
+			System.out.println("Truck susscefully return");
+		j--; 
+		
+		}
+		if ( temReservationContract.getM_vehicle() instanceof van)
+		{
+		temReservationContract.setDay(temReservationContract.getDay()- main.realday);
+		r.vans.get(i).setAvailibility(true);
+		System.out.println("Van susscefully return");
+		i--;
+		// Todo set availibility again
+		}
+		this.resContract.remove(ResID);
+		r.contractID--;
+	billPayment bill = new billPayment(this, r, temReservationContract);
+	}
 	public void setName(String name) {
 		Name = name;
 	}
@@ -67,6 +121,7 @@ public class client {
 		
 	}
 
+
 	//Rent vehicle
 	public void requestRent(rentalOffice r, int ID) {
 		if(resContract.isEmpty()) {
@@ -74,16 +129,13 @@ public class client {
 		}
 		else
 		{	
-			rentContract.add(r.createRentContract(this, resContract.get(ID-1)));
-			System.out.println("Car fetched");
+			rentContract.add(r.createRentContract(this, resContract.get(ID)));
+			System.out.println("Vehical fetched");
 			System.out.println(this.getName() + " has #ReservationContract:" + resContract.size() + " and #RentalContract:" + rentContract.size()+"\n");
 		}
 	}
 
 	public void reserveVehicle(rentalOffice r, String v,int day){
-		
-		
-		
 		if (v== "v") {
 		for ( i = 0; i <= (r.getNoOfVan()+1); i++)
 		{
@@ -91,7 +143,7 @@ public class client {
 			else if(r.vans.get(i).isAvailibility()) 
 			{
 				r.vans.get(i).setAvailibility(false);
-				resContract.add(r.createResContract(this,r.vans.get(i),day));
+				resContract.add(r.createResContract(this,r.vans.get(i),day,i));
 				System.out.println("Van reserved for " + day+ " days");
 				
 				break;
@@ -106,8 +158,8 @@ public class client {
 				if (j == r.getNoOfTruck()+1) {System.out.println("No trucks left to reserve"); break;}
 				else if(r.trucks.get(j).isAvailibility())
 				{
-					r.trucks.get(i=j).setAvailibility(false);
-					resContract.add(r.createResContract(this,r.trucks.get(j),day));
+					r.trucks.get(j).setAvailibility(false);
+					resContract.add(r.createResContract(this,r.trucks.get(j),day,j));
 					System.out.println("Truck reserved for "+ day+ " days");
 					break;
 				}
@@ -125,7 +177,7 @@ public class client {
 				else if(r.cars.get(k).isAvailibility())
 				{	
 					r.cars.get(k).setAvailibility(false);
-					resContract.add(r.createResContract(this,r.cars.get(k),day));
+					resContract.add(r.createResContract(this,r.cars.get(k),day,k));
 					System.out.println("Car reserved for "+ day+ " days");
 					break;
 				}
@@ -138,17 +190,39 @@ public class client {
 		
 	}
 
-	public void returnVehicle(){
- k--;
- // Todo set availibility again
- 
- // Todo rental office calculate rent (paybill)
-
- j--; 
- // Todo set availibility again
-
- i--;
- // Todo set availibility again
+	public void returnVehicle(rentalOffice r,int RentalContractID){
+		contract tempRentalContract= rentContract.get(RentalContractID);
+		reservationContract temReservationContract = resContract.get(RentalContractID);
+		if ( tempRentalContract.getM_vehicle() instanceof car )
+		{
+			temReservationContract.setDay(temReservationContract.getDay()- main.realday);
+			r.cars.get(k).setAvailibility(true);
+			k--;
+			System.out.println("Car susscefully return");
+	}
+		// Todo set availibility again
+		// Todo rental office calculate rent (paybill)
+		if ( tempRentalContract.getM_vehicle() instanceof truck )
+		{
+			temReservationContract.setDay(temReservationContract.getDay()- main.realday);
+			r.trucks.get(j).setAvailibility(true);
+			System.out.println("Truck susscefully return");
+		j--; 
+		
+		}
+		if ( tempRentalContract.getM_vehicle() instanceof van)
+		{
+		temReservationContract.setDay(temReservationContract.getDay()- main.realday);
+		r.vans.get(i).setAvailibility(true);
+		System.out.println("Van susscefully return");
+		i--;
+		// Todo set availibility again
+		}
+		this.rentContract.remove(RentalContractID);
+		this.resContract.remove(RentalContractID);
+		r.contractID--;
+		this.printListofRes();
+	billPayment bill = new billPayment(this, r, temReservationContract);
 	}
 
 }//end client

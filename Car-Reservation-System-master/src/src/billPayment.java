@@ -1,5 +1,7 @@
 package src;
 
+import Contract.reservationContract;
+
 /**
  * @author Tuan Nguyen
  * @version 1.0
@@ -17,8 +19,14 @@ public class billPayment {
 		this.totalAmount = totalAmount;
 	}
 
-	public billPayment(){
-
+	public billPayment(client c,rentalOffice r,reservationContract rc){
+		int calAmount=0 ;
+		calAmount = (main.realday-rc.getStartday()) * 10;
+		// TODO calculate the amount
+		r.setGrossRevenue(r.getGrossRevenue()+ calAmount);
+		System.out.println();
+		System.out.println(c.getName()+" has to pay "+ calAmount +" euro\n");
+		
 	}
 
 	public void finalize() throws Throwable {
